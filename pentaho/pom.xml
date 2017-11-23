@@ -293,6 +293,11 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
+        <configuration>
+          <instructions>
+            <Export-Package>pt.webdetails.cpf.*</Export-Package> <!-- include "impl" and "internal" package names  -->
+          </instructions>
+        </configuration>
       </plugin>
     </plugins>
   </build>
