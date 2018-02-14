@@ -1,5 +1,5 @@
 /*!
- * Copyright 2002 - 2017 Webdetails, a Hitachi Vantara company. All rights reserved.
+ * Copyright 2002 - 2018 Webdetails, a Hitachi Vantara company. All rights reserved.
  *
  * This software was developed by Webdetails and is provided under the terms
  * of the Mozilla Public License, Version 2.0, or any later version. You may not use
@@ -116,13 +116,13 @@ public class PluginSystemAccessTest extends TestCase {
     IBasicFile file = reader.fetchFile( "stuff/stuffedBogus.txt" );
     assertEquals( "txt", file.getExtension() );
     assertEquals( "stuffedBogus.txt", file.getName() );
-    assertEquals( "stuff/stuffedBogus.txt", file.getPath() );
+    assertEquals( processPath( "stuff/stuffedBogus.txt" ), file.getPath() );
     StringBuilder builder = new StringBuilder( getFullPluginDir( "bogusPlugin" ) );
     RepositoryHelper.appendPath( builder, "resources" );
     RepositoryHelper.appendPath( builder, file.getPath() );
     final String fullPath = builder.toString();
     assertEquals( fullPath, file.getFullPath() );
-    assertEquals( userDir + "/src/test/resources/repo/system/bogusPlugin/resources/stuff/stuffedBogus.txt", fullPath );
+    assertEquals( getFullPluginDir( "bogusPlugin/resources/stuff/stuffedBogus.txt" ), fullPath );
   }
 
   @Test
@@ -155,12 +155,12 @@ public class PluginSystemAccessTest extends TestCase {
     for ( IBasicFile txtFile : txtFiles ) {
       if ( txtFile.getName().equals( "stuffedBogus.txt" ) ) {
         stuffFound = true;
-        assertEquals( "stuff/stuffedBogus.txt", txtFile.getPath() );
+        assertEquals( processPath( "stuff/stuffedBogus.txt" ), txtFile.getPath() );
         assertEquals( getFullPluginDir( "bogusPlugin/resources/stuff/stuffedBogus.txt" ), txtFile.getFullPath() );
       }
       if ( txtFile.getName().equals( "moreStuffedBogus.txt" ) ) {
         moreFound = true;
-        assertEquals( "stuff/moreStuff/moreStuffedBogus.txt", txtFile.getPath() );
+        assertEquals( processPath( "stuff/moreStuff/moreStuffedBogus.txt" ), txtFile.getPath() );
       }
       if ( txtFile.getName().equals( "bogus.txt" ) ) {
         bogusFound = true;
@@ -206,12 +206,16 @@ public class PluginSystemAccessTest extends TestCase {
   }
 
   private String getFullPluginDir( String pluginDir ) {
-    return userDir + "/src/test/resources/repo/system/" + pluginDir;
+    return processPath( userDir + "/src/test/resources/repo/system/" + pluginDir );
   }
 
   private PluginClassLoader getPluginClassLoader( String pluginDir ) {
     String systemPath = getFullPluginDir( pluginDir );
     return new PluginClassLoader( new File( systemPath ), this.getClass().getClassLoader() );
+  }
+
+  private String processPath( String path ) {
+    return path.replace( "/", System.getProperty( "file.separator" ) );
   }
 
 }

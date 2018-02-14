@@ -1,15 +1,15 @@
 /*!
-* Copyright 2002 - 2017 Webdetails, a Hitachi Vantara company.  All rights reserved.
-*
-* This software was developed by Webdetails and is provided under the terms
-* of the Mozilla Public License, Version 2.0, or any later version. You may not use
-* this file except in compliance with the license. If you need a copy of the license,
-* please go to  http://mozilla.org/MPL/2.0/. The Initial Developer is Webdetails.
-*
-* Software distributed under the Mozilla Public License is distributed on an "AS IS"
-* basis, WITHOUT WARRANTY OF ANY KIND, either express or  implied. Please refer to
-* the license for the specific language governing your rights and limitations.
-*/
+ * Copyright 2002 - 2018 Webdetails, a Hitachi Vantara company.  All rights reserved.
+ *
+ * This software was developed by Webdetails and is provided under the terms
+ * of the Mozilla Public License, Version 2.0, or any later version. You may not use
+ * this file except in compliance with the license. If you need a copy of the license,
+ * please go to  http://mozilla.org/MPL/2.0/. The Initial Developer is Webdetails.
+ *
+ * Software distributed under the Mozilla Public License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or  implied. Please refer to
+ * the license for the specific language governing your rights and limitations.
+ */
 
 package pt.webdetails.cpf.utils;
 
@@ -49,9 +49,9 @@ public class PluginUtilsTest {
     String pluginRelDirWithEncodedSpaces =
       pluginUtils.getPluginRelativeDirectory( PLUGIN_DIR + "/resources/dir%20with%20spaces/bogus.txt", true );
 
-    Assert.assertTrue( pluginRelDir.equals( "/bogusPlugin/resources/stuff/" ) );
-    Assert.assertTrue( pluginRelDirWithSpaces.equals( "/bogusPlugin/resources/dir with spaces/" ) );
-    Assert.assertTrue( pluginRelDirWithEncodedSpaces.equals( "/bogusPlugin/resources/dir with spaces/" ) );
+    Assert.assertTrue( pluginRelDir.equals( processPath( "/bogusPlugin/resources/stuff/" ) ) );
+    Assert.assertTrue( pluginRelDirWithSpaces.equals( processPath( "/bogusPlugin/resources/dir with spaces/" ) ) );
+    Assert.assertTrue( pluginRelDirWithEncodedSpaces.equals( processPath( "/bogusPlugin/resources/dir with spaces/" ) ) );
 
   }
 
@@ -73,6 +73,10 @@ public class PluginUtilsTest {
     Assert.assertTrue( allResources.size() == 8 );
     Assert.assertTrue( onlyHidden.size() == 1 );
     Assert.assertTrue( onlyTxtInResourcesNoRecursive.size() == 1 );
+  }
+
+  private String processPath( String path ) {
+    return path.replace( "/", System.getProperty( "file.separator" ) );
   }
 
 }
