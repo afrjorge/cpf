@@ -69,11 +69,7 @@ public final class ReadAccess implements IReadAccess {
   }
 
   public List<IBasicFile> listFiles( String path, IBasicFileFilter filter, int maxDepth, boolean includeDirs, boolean showHiddenFilesAndFolders ) {
-    if ( maxDepth < 0 ) {
-      return listFiles( path, filter, true );
-    } else {
-      return listFiles( path, filter, false );
-    }
+    return listFiles( path, filter, maxDepth < 0 );
   }
 
   private List<IBasicFile> listFiles( String path, IBasicFileFilter filter, boolean recursive ) {

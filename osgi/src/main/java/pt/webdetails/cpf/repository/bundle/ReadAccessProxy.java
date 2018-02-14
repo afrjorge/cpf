@@ -24,6 +24,7 @@ import pt.webdetails.cpf.repository.api.IReadAccess;
 public final class ReadAccessProxy implements IReadAccess {
   private List<IReadAccess> readAccesses;
   private final String basePath;
+  private final String DEFAULT_PATH_SEPARATOR = "/";
 
   public ReadAccessProxy( List<IReadAccess> readAccesses, String basePath ) {
     this.readAccesses = readAccesses;
@@ -117,7 +118,7 @@ public final class ReadAccessProxy implements IReadAccess {
     }
 
     String fullPath = this.basePath;
-    if ( fullPath.endsWith( "/" ) && path.startsWith( "/" ) ) {
+    if ( fullPath.endsWith( DEFAULT_PATH_SEPARATOR ) && path.startsWith( DEFAULT_PATH_SEPARATOR ) ) {
       fullPath += path.substring( 1 );
     } else {
       fullPath += path;
